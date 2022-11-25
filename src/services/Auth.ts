@@ -11,13 +11,14 @@ class AuthService {
     this.axiosClient = createEnhancedClient({ baseURL: `${apiURL}/api/auth`, withCredentials: true });
   }
 
-  public async isLoggedIn(): Promise<boolean> {
+  // TODO: add type of user info
+  public async isLoggedIn(): Promise<any> {
     try {
-      const resp = await this.axiosClient.get<boolean>('/isLoggedIn');
+      const resp = await this.axiosClient.get<any>('/isLoggedIn');
 
       return resp.data;
     } catch (err) {
-      throw new Error('Cant get is logged in info');
+      throw new Error('Cant get is logged in user info');
     }
   }
 }
