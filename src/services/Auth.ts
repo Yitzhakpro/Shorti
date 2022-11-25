@@ -18,7 +18,31 @@ class AuthService {
 
       return resp.data;
     } catch (err) {
+      console.log(err);
       throw new Error('Cant get is logged in user info');
+    }
+  }
+
+  // TODO: add type of user info
+  public async login(email: string, password: string): Promise<any> {
+    try {
+      const resp = await this.axiosClient.post<any>('/login', { email, password });
+
+      return resp.data;
+    } catch (err) {
+      console.log(err);
+      throw new Error('Cant login');
+    }
+  }
+
+  public async register(email: string, username: string, password: string): Promise<any> {
+    try {
+      const resp = await this.axiosClient.post<any>('/register', { email, username, password });
+
+      return resp.data;
+    } catch (err) {
+      console.log(err);
+      throw new Error('Cant register');
     }
   }
 }
