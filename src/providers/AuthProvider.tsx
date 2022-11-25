@@ -6,6 +6,7 @@ import { Auth } from '../services';
 interface IAuthProviderProps {
   children: React.ReactNode | React.ReactNode[];
 }
+
 function AuthProvider(props: IAuthProviderProps): JSX.Element {
   const { children } = props;
 
