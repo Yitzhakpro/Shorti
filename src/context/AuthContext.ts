@@ -1,11 +1,13 @@
 import { createContext } from 'react';
 
-interface IAuthContext {
+export interface IAuthContext {
+  isLoggedIn: boolean;
   username: string;
   email: string;
 }
 
 const defaultAuthContext: IAuthContext = {
+  isLoggedIn: false,
   username: 'anonymous',
   email: 'anonymous@anon.com',
 };
