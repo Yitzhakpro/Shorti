@@ -16,12 +16,16 @@ function AuthProvider(props: IAuthProviderProps): JSX.Element {
     retry: false,
   });
 
+  const register = async (email: string, username: string, password: string): Promise<void> => {
+    await Auth.register(email, username, password);
+  };
+
   if (isLoading) {
     return <h1>loading</h1>;
   }
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn: false, email: '', username: '' }}>
+    <AuthContext.Provider value={{ isLoggedIn: false, email: '', username: '', register }}>
       {children}
     </AuthContext.Provider>
   );
