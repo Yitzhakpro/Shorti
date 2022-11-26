@@ -10,13 +10,21 @@ interface IAuthProviderProps {
 function AuthProvider(props: IAuthProviderProps): JSX.Element {
   const { children } = props;
 
-  const { isLoading } = useQuery({ queryKey: ['isLoggedIn'], queryFn: () => Auth.isLoggedIn() });
+  const { isLoading } = useQuery({
+    queryKey: ['isLoggedIn'],
+    queryFn: () => Auth.isLoggedIn(),
+    retry: false,
+  });
 
   if (isLoading) {
     return <h1>loading</h1>;
   }
 
-  return <AuthContext.Provider value={{ isLoggedIn: false, email: '', username: '' }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ isLoggedIn: false, email: '', username: '' }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 export default AuthProvider;
