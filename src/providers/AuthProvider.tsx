@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from '../context';
 import { Auth } from '../services';
@@ -16,19 +16,29 @@ function AuthProvider(props: IAuthProviderProps): JSX.Element {
     retry: false,
   });
 
+  const [authInfo, setAuthInfo] = useState({ isLoggedIn: false, email: '', username: '' });
+
   const register = async (email: string, username: string, password: string): Promise<void> => {
-    await Auth.register(email, username, password);
+    setAuthInfo({ isLoggedIn: false, email: '', username: '' });
+
+    try {
+      const registerResponse = await Auth.register(email, username, password);
+
+      setAuthInfo({
+        isLoggedIn: true,
+        email: registerResponse.email,
+        username: registerResponse.username,
+      });
+    } catch (err) {
+      setAuthInfo({ isLoggedIn: false, email: '', username: '' });
+    }
   };
 
   if (isLoading) {
     return <h1>loading</h1>;
   }
 
-  return (
-    <AuthContext.Provider value={{ isLoggedIn: false, email: '', username: '', register }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ ...authInfo, register }}>{children}</AuthContext.Provider>;
 }
 
 export default AuthProvider;
