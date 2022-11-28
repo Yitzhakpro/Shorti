@@ -20,13 +20,11 @@ function Register(): JSX.Element {
   const handleRegister = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
 
-    try {
-      const { email, username, password } = registerInfo;
-      await register(email, username, password);
+    const { email, username, password } = registerInfo;
+    const success = await register(email, username, password);
 
+    if (success) {
       navigate('/');
-    } catch (err) {
-      console.error(err);
     }
   };
 

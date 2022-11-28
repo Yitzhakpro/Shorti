@@ -18,7 +18,7 @@ function AuthProvider(props: IAuthProviderProps): JSX.Element {
 
   const [authInfo, setAuthInfo] = useState({ isLoggedIn: false, email: '', username: '' });
 
-  const register = async (email: string, username: string, password: string): Promise<void> => {
+  const register = async (email: string, username: string, password: string): Promise<boolean> => {
     setAuthInfo({ isLoggedIn: false, email: '', username: '' });
 
     try {
@@ -29,8 +29,12 @@ function AuthProvider(props: IAuthProviderProps): JSX.Element {
         email: registerResponse.email,
         username: registerResponse.username,
       });
+
+      return true;
     } catch (err) {
       setAuthInfo({ isLoggedIn: false, email: '', username: '' });
+
+      return false;
     }
   };
 
