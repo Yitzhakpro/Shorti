@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from '../context';
 import { Auth } from '../services';
@@ -10,13 +10,22 @@ interface IAuthProviderProps {
 function AuthProvider(props: IAuthProviderProps): JSX.Element {
   const { children } = props;
 
-  const { isLoading } = useQuery({
+  const { isLoading, data, isError } = useQuery({
     queryKey: ['isLoggedIn'],
     queryFn: () => Auth.isLoggedIn(),
     retry: false,
   });
 
   const [authInfo, setAuthInfo] = useState({ isLoggedIn: false, email: '', username: '' });
+
+  useEffect(() => {
+    if (data && !isError) {
+      const { email, username } = data;
+      setAuthInfo({ isLoggedIn: true, email, username });
+    } else {
+      setAuthInfo({ isLoggedIn: false, email: '', username: '' });
+    }
+  }, [data, isError]);
 
   const register = async (email: string, username: string, password: string): Promise<boolean> => {
     setAuthInfo({ isLoggedIn: false, email: '', username: '' });

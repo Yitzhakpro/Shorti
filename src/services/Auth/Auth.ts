@@ -1,6 +1,6 @@
 import { endpointsConfig } from '../../config';
 import { createEnhancedClient } from '../../utils';
-import type { RegisterResponse } from './types';
+import type { UserInfo } from '../../types';
 import type { AxiosInstance } from 'axios';
 
 const { apiURL } = endpointsConfig;
@@ -15,10 +15,9 @@ class AuthService {
     });
   }
 
-  // TODO: add type of user info
-  public async isLoggedIn(): Promise<any> {
+  public async isLoggedIn(): Promise<UserInfo> {
     try {
-      const resp = await this.axiosClient.get<any>('/isLoggedIn');
+      const resp = await this.axiosClient.get<UserInfo>('/isLoggedIn');
 
       return resp.data;
     } catch (err) {
@@ -39,13 +38,9 @@ class AuthService {
     }
   }
 
-  public async register(
-    email: string,
-    username: string,
-    password: string
-  ): Promise<RegisterResponse> {
+  public async register(email: string, username: string, password: string): Promise<UserInfo> {
     try {
-      const resp = await this.axiosClient.post<RegisterResponse>('/register', {
+      const resp = await this.axiosClient.post<UserInfo>('/register', {
         email,
         username,
         password,
