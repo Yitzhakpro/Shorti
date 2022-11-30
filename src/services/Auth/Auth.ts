@@ -26,10 +26,9 @@ class AuthService {
     }
   }
 
-  // TODO: add type of user info
-  public async login(email: string, password: string): Promise<any> {
+  public async login(email: string, password: string): Promise<UserInfo> {
     try {
-      const resp = await this.axiosClient.post<any>('/login', { email, password });
+      const resp = await this.axiosClient.post<UserInfo>('/login', { email, password });
 
       return resp.data;
     } catch (err) {

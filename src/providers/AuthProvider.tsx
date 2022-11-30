@@ -47,11 +47,33 @@ function AuthProvider(props: IAuthProviderProps): JSX.Element {
     }
   };
 
+  const login = async (email: string, password: string): Promise<boolean> => {
+    setAuthInfo({ isLoggedIn: false, email: '', username: '' });
+
+    try {
+      const loginResponse = await Auth.login(email, password);
+
+      setAuthInfo({
+        isLoggedIn: true,
+        email: loginResponse.email,
+        username: loginResponse.username,
+      });
+
+      return true;
+    } catch (err) {
+      setAuthInfo({ isLoggedIn: false, email: '', username: '' });
+
+      return false;
+    }
+  };
+
   if (isLoading) {
     return <h1>loading</h1>;
   }
 
-  return <AuthContext.Provider value={{ ...authInfo, register }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ ...authInfo, register, login }}>{children}</AuthContext.Provider>
+  );
 }
 
 export default AuthProvider;
