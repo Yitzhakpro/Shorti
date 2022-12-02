@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../../hooks';
 
 function Login(): JSX.Element {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useAuth();
 
   const [loginInfo, setLoginInfo] = useState({
@@ -22,7 +23,10 @@ function Login(): JSX.Element {
     const success = await login(email, password);
 
     if (success) {
-      navigate('/');
+      const { state } = location;
+      const gotFromUrl = state.from ? state.from.pathname ?? '/' : '/';
+
+      navigate(gotFromUrl, { replace: true });
     }
   };
 

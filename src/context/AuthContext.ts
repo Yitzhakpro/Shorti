@@ -22,5 +22,6 @@ const defaultAuthContext: IAuthContext = {
 };
 
 const AuthContext = createContext(defaultAuthContext);
+AuthContext.displayName = 'AuthContext';
 
 export default AuthContext;
