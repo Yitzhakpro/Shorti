@@ -71,9 +71,15 @@ function AuthProvider(props: IAuthProviderProps): JSX.Element {
     return <h1>loading</h1>;
   }
 
-  return (
-    <AuthContext.Provider value={{ ...authInfo, register, login }}>{children}</AuthContext.Provider>
-  );
+  if (data?.email === authInfo.email) {
+    return (
+      <AuthContext.Provider value={{ ...authInfo, register, login }}>
+        {children}
+      </AuthContext.Provider>
+    );
+  }
+
+  return <></>;
 }
 
 export default AuthProvider;
