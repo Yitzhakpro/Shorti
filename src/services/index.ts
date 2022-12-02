@@ -1,3 +1,4 @@
 import Auth from './Auth';
+import Links from './Links';
 
-export { Auth };
+export { Auth, Links };
