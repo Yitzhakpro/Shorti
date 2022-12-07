@@ -1,0 +1,15 @@
+.logged-out-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.auth-btn a {
+  text-decoration: none;
+  color: white;
+}
+
+.auth-btn {
+  color: white;
+}
+
