@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from '../context';
 import { Auth } from '../services';
 
@@ -10,22 +9,26 @@ interface IAuthProviderProps {
 function AuthProvider(props: IAuthProviderProps): JSX.Element {
   const { children } = props;
 
-  const { isLoading, data, isError } = useQuery({
-    queryKey: ['isLoggedIn'],
-    queryFn: () => Auth.isLoggedIn(),
-    retry: false,
-  });
-
+  const [isLoading, setIsLoading] = useState(true);
   const [authInfo, setAuthInfo] = useState({ isLoggedIn: false, email: '', username: '' });
+  const [_isError, setIsError] = useState({ isError: false, error: '' });
 
   useEffect(() => {
-    if (data && !isError) {
-      const { email, username } = data;
-      setAuthInfo({ isLoggedIn: true, email, username });
-    } else {
-      setAuthInfo({ isLoggedIn: false, email: '', username: '' });
-    }
-  }, [data, isError]);
+    setIsLoading(true);
+
+    Auth.isLoggedIn()
+      .then((res) => {
+        const { email, username } = res;
+        setAuthInfo({ isLoggedIn: true, email, username });
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setAuthInfo({ isLoggedIn: false, email: '', username: '' });
+        setIsError({ isError: true, error: err });
+        setIsLoading(false);
+      });
+  }, []);
 
   const register = async (email: string, username: string, password: string): Promise<boolean> => {
     setAuthInfo({ isLoggedIn: false, email: '', username: '' });
