@@ -16,7 +16,7 @@ class LinksService {
 
   public async getOwnShortUrls(): Promise<any[]> {
     try {
-      const resp = await this.axiosClient.get('/getShortUrls');
+      const resp = await this.axiosClient.get('/getUrls');
 
       return resp.data;
     } catch (err) {
