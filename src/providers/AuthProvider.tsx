@@ -30,6 +30,28 @@ function AuthProvider(props: IAuthProviderProps): JSX.Element {
       });
   }, []);
 
+  const logout = async (): Promise<boolean> => {
+    try {
+      await Auth.logout();
+
+      setAuthInfo({
+        isLoggedIn: false,
+        email: '',
+        username: '',
+      });
+
+      return true;
+    } catch (err) {
+      setAuthInfo({
+        isLoggedIn: false,
+        email: '',
+        username: '',
+      });
+
+      return false;
+    }
+  };
+
   const register = async (email: string, username: string, password: string): Promise<boolean> => {
     setAuthInfo({ isLoggedIn: false, email: '', username: '' });
 
@@ -75,7 +97,9 @@ function AuthProvider(props: IAuthProviderProps): JSX.Element {
   }
 
   return (
-    <AuthContext.Provider value={{ ...authInfo, register, login }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ ...authInfo, register, login, logout }}>
+      {children}
+    </AuthContext.Provider>
   );
 }
 
