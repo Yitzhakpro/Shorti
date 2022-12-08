@@ -51,6 +51,17 @@ class AuthService {
       throw new Error('Cant register');
     }
   }
+
+  public async logout(): Promise<'Ok'> {
+    try {
+      const resp = await this.axiosClient.post<'Ok'>('/logout');
+
+      return resp.data;
+    } catch (err) {
+      console.log(err);
+      throw new Error('Cant logout');
+    }
+  }
 }
 
 export default new AuthService();

@@ -7,6 +7,7 @@ export interface IAuthContext {
   email: string;
   register: (email: string, username: string, password: string) => Promise<boolean>;
   login: (email: string, password: string) => Promise<boolean>;
+  logout: () => Promise<boolean>;
 }
 
 const defaultAuthContext: IAuthContext = {
@@ -17,6 +18,9 @@ const defaultAuthContext: IAuthContext = {
     return Promise.resolve(true);
   },
   login: () => {
+    return Promise.resolve(true);
+  },
+  logout: () => {
     return Promise.resolve(true);
   },
 };
