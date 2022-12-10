@@ -9,6 +9,8 @@ coverage/
 yarn.lock
 package-lock.json
 package.json
+Dockerfile
+nginx.conf
 
 # Logs
 logs
