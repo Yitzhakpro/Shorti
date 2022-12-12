@@ -11,6 +11,8 @@ package-lock.json
 package.json
 Dockerfile
 nginx.conf
+*.conf
+*.conf.*
 
 # Logs
 logs
