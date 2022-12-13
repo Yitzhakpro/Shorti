@@ -18,9 +18,14 @@ function AuthProvider(props: IAuthProviderProps): JSX.Element {
 
     Auth.isLoggedIn()
       .then((res) => {
-        const { email, username } = res;
-        setAuthInfo({ isLoggedIn: true, email, username });
-        setIsLoading(false);
+        if (res) {
+          const { email, username } = res;
+          setAuthInfo({ isLoggedIn: true, email, username });
+          setIsLoading(false);
+        } else {
+          setAuthInfo({ isLoggedIn: false, email: '', username: '' });
+          setIsLoading(false);
+        }
       })
       .catch((err) => {
         console.log(err);

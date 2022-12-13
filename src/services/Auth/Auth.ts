@@ -15,7 +15,7 @@ class AuthService {
     });
   }
 
-  public async isLoggedIn(): Promise<UserInfo> {
+  public async isLoggedIn(): Promise<UserInfo | null> {
     try {
       const resp = await this.axiosClient.get<UserInfo>('/isLoggedIn');
 
