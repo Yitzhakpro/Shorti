@@ -9,6 +9,7 @@ import {
   Register,
   AllLinks,
   CreateLink,
+  NotFound,
 } from './components';
 import { AuthProvider } from './providers';
 
@@ -33,7 +34,8 @@ function App() {
               <Route path="/u/allLinks" element={<AllLinks />} />
               <Route path="/u/createLinks" element={<CreateLink />} />
             </Route>
-            <Route path="*" element={<h1>404</h1>} />
+            <Route path="/u/404" element={<NotFound />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </AuthProvider>
