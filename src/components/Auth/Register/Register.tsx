@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import { useAuth } from '../../../hooks';
 
 function Register(): JSX.Element {
   const navigate = useNavigate();
-  const { register } = useAuth();
+  const { isLoggedIn, register } = useAuth();
 
   const [registerInfo, setRegisterInfo] = useState({
     username: '',
@@ -27,6 +27,10 @@ function Register(): JSX.Element {
       navigate('/');
     }
   };
+
+  if (isLoggedIn) {
+    return <Navigate to="/" replace={true} />;
+  }
 
   return (
     <form onSubmit={handleRegister}>

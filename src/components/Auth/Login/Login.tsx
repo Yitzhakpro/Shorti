@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { useAuth } from '../../../hooks';
 
 function Login(): JSX.Element {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login } = useAuth();
+  const { isLoggedIn, login } = useAuth();
 
   const [loginInfo, setLoginInfo] = useState({
     email: '',
@@ -24,11 +24,15 @@ function Login(): JSX.Element {
 
     if (success) {
       const { state } = location;
-      const gotFromUrl = state.from ? state.from.pathname ?? '/' : '/';
+      const gotFromUrl = state && state.from ? state.from.pathname ?? '/' : '/';
 
       navigate(gotFromUrl, { replace: true });
     }
   };
+
+  if (isLoggedIn) {
+    return <Navigate to="/" replace={true} />;
+  }
 
   return (
     <form onSubmit={handleLogin}>
