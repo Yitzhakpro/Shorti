@@ -38,7 +38,6 @@ class LinksService {
     }
   }
 
-  // TODO: add response type object
   public async createShortUrl(fullUrl: string): Promise<UrlInfo> {
     try {
       const resp = await this.axiosClient.post<UrlInfoResponse>('/createShortUrl', { fullUrl });
@@ -54,6 +53,15 @@ class LinksService {
     } catch (err) {
       console.log(err);
       throw new Error('cant create new short url');
+    }
+  }
+
+  public async deleteShortUrl(shortUrlId: string): Promise<void> {
+    try {
+      await this.axiosClient.delete<'Ok'>(`/deleteShortUrl/${shortUrlId}`);
+    } catch (err) {
+      console.log(err);
+      throw new Error('cant delete short url');
     }
   }
 }
