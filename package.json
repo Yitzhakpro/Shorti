@@ -21,6 +21,7 @@
     "@mui/material": "^5.10.17",
     "@tanstack/react-query": "^4.16.1",
     "axios": "^1.2.0",
+    "dayjs": "^1.11.7",
     "eslint-plugin-autofix": "^1.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
