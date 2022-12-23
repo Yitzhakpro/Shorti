@@ -23,6 +23,21 @@ function useLinks() {
       });
   }, []);
 
+  const createLink = useCallback(
+    async (fullUrl: string): Promise<void> => {
+      try {
+        const addedLink = await Links.createShortUrl(fullUrl);
+
+        const newLinksList = [...linksList, addedLink];
+
+        setLinksList(newLinksList);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [linksList]
+  );
+
   const deleteLink = useCallback(
     async (id: string): Promise<void> => {
       try {
@@ -40,7 +55,7 @@ function useLinks() {
     [linksList]
   );
 
-  return { isLoading, linksList, isError, deleteLink };
+  return { isLoading, linksList, isError, createLink, deleteLink };
 }
 
 export default useLinks;
