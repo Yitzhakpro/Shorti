@@ -1,49 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import Add from '@mui/icons-material/Add';
 import { Container, SpeedDial, SpeedDialAction, SpeedDialIcon } from '@mui/material';
-import { Links } from '../../../services';
+import { useLinks } from '../../../hooks';
 import { SkeletonList } from '../../../utilComponents';
 import LinkItem from '../LinkItem';
-import type { UrlInfo } from '../../../types';
 import './linksList.css';
 
 function LinksList(): JSX.Element {
-  const [isLoading, setIsLoading] = useState(true);
-  const [linksList, setLinksList] = useState<UrlInfo[]>([]);
-  const [isError, setIsError] = useState(false);
-
-  // TODO: re-think in react query
-  useEffect(() => {
-    setIsLoading(true);
-    setIsError(false);
-
-    Links.getOwnShortUrls()
-      .then((links) => {
-        setLinksList(links);
-        setIsLoading(false);
-      })
-      .catch((_error) => {
-        setIsError(true);
-        setIsLoading(false);
-      });
-  }, []);
-
-  const handleDeleteLink = useCallback(
-    async (id: string): Promise<void> => {
-      try {
-        await Links.deleteShortUrl(id);
-
-        const filteredLinks = linksList.filter((urlInfo) => {
-          return urlInfo.id !== id;
-        });
-
-        setLinksList(filteredLinks);
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    [linksList]
-  );
+  const { isLoading, linksList, isError, deleteLink } = useLinks();
 
   return (
     <>
@@ -52,7 +16,7 @@ function LinksList(): JSX.Element {
         {isError && <p>error fetching</p>}
         {linksList &&
           linksList.map((urlInfo) => {
-            return <LinkItem key={urlInfo.id} linkInfo={urlInfo} handleDelete={handleDeleteLink} />;
+            return <LinkItem key={urlInfo.id} linkInfo={urlInfo} handleDelete={deleteLink} />;
           })}
       </Container>
 
