@@ -11,10 +11,10 @@ function SkeletonList(props: ISkeletonListProps): JSX.Element {
   return (
     <>
       {[...Array(rows)].map((_, index) => (
-        <>
-          <Skeleton key={index} variant="rectangular" sx={{ my: 4, mx: 1 }} {...skeletonProps} />
+        <div key={index}>
+          <Skeleton variant="rectangular" sx={{ my: 4, mx: 1 }} {...skeletonProps} />
           <Divider variant="middle" />
-        </>
+        </div>
       ))}
     </>
   );

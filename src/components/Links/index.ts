@@ -1,4 +1,4 @@
-import AllLinks from './AllLinks';
 import CreateLink from './CreateLink';
+import LinksList from './LinksList';
 
-export { AllLinks, CreateLink };
+export { LinksList, CreateLink };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppBar, Toolbar, Box, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../../../hooks';
 import LoggedInSection from './LoggedInSection';
 import LoggedOutSection from './LoggedOutSection';
@@ -23,9 +23,9 @@ function Navbar(): JSX.Element {
           </Typography>
           {isLoggedIn &&
             pages.map((pageInfo) => (
-              <Link key={pageInfo.name} to={pageInfo.link}>
+              <NavLink key={pageInfo.name} to={pageInfo.link}>
                 {pageInfo.name}
-              </Link>
+              </NavLink>
             ))}
         </Box>
 

@@ -7,7 +7,7 @@ import {
   Homepage,
   Login,
   Register,
-  AllLinks,
+  LinksList,
   CreateLink,
   NotFound,
 } from './components';
@@ -31,7 +31,7 @@ function App() {
             <Route path="/u/login" element={<Login />} />
             <Route path="/u/register" element={<Register />} />
             <Route element={<ProtectedLayout />}>
-              <Route path="/u/allLinks" element={<AllLinks />} />
+              <Route path="/u/allLinks" element={<LinksList />} />
               <Route path="/u/createLinks" element={<CreateLink />} />
             </Route>
             <Route path="/u/404" element={<NotFound />} />
