@@ -6,16 +6,13 @@ import LoggedInSection from './LoggedInSection';
 import LoggedOutSection from './LoggedOutSection';
 import './navbar.css';
 
-const pages = [
-  { name: 'My Links', link: '/u/allLinks' },
-  { name: 'Create Links', link: '/u/createLinks' },
-];
+const pages = [{ name: 'My Links', link: '/u/allLinks' }];
 
 function Navbar(): JSX.Element {
   const { isLoggedIn } = useAuth();
 
   return (
-    <AppBar position="static">
+    <AppBar position="relative">
       <Toolbar>
         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flexGrow: 1 }}>
           <Typography className="shorti-title" variant="h6" component="div">

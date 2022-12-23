@@ -4,10 +4,10 @@ import Navbar from './Navbar';
 
 function Layout(): JSX.Element {
   return (
-    <div>
+    <>
       <Navbar />
       <Outlet />
-    </div>
+    </>
   );
 }
 

@@ -1,3 +1,8 @@
+.links-list {
+  height: 89%;
+  overflow-y: auto;
+}
+
 .links-list > * {
   margin-top: 2%;
 }

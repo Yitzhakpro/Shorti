@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Add from '@mui/icons-material/Add';
-import { Container, SpeedDial, SpeedDialAction, SpeedDialIcon } from '@mui/material';
-import { useLinks } from '../../../hooks';
+import { Container, Fab } from '@mui/material';
+import { useLinks, useModal } from '../../../hooks';
 import { SkeletonList } from '../../../utilComponents';
+import CreateLinkDialog from '../CreateLinkDialog';
 import LinkItem from '../LinkItem';
 import './linksList.css';
 
 function LinksList(): JSX.Element {
-  const { isLoading, linksList, isError, deleteLink } = useLinks();
+  const { isLoading, linksList, isError, createLink, deleteLink } = useLinks();
+  const [addShortiOpen, setIsShortiOpen, toggleShorti] = useModal();
+
+  const closeCreateLinkDialog = useCallback(() => {
+    setIsShortiOpen(false);
+  }, [setIsShortiOpen]);
 
   return (
     <>
@@ -20,13 +26,18 @@ function LinksList(): JSX.Element {
           })}
       </Container>
 
-      <SpeedDial
-        ariaLabel="SpeedDial basic example"
+      <CreateLinkDialog
+        isOpen={addShortiOpen}
+        handleClose={closeCreateLinkDialog}
+        createLink={createLink}
+      />
+      <Fab
         sx={{ position: 'absolute', bottom: 16, right: 16 }}
-        icon={<SpeedDialIcon />}
+        color="primary"
+        onClick={toggleShorti}
       >
-        <SpeedDialAction icon={<Add />} tooltipTitle="Add Shorti" />
-      </SpeedDial>
+        <Add />
+      </Fab>
     </>
   );
 }

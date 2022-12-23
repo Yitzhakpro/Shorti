@@ -23,10 +23,6 @@ server {
             try_files /index.html =404;
         }
 
-        location /u/createLinks {
-            try_files /index.html =404;
-        }
-
         location ~ "^/[a-zA-Z0-9]{8}" {
             proxy_pass ${NGINX_SHORT_API}/api/links/getShortUrl$uri;
         }

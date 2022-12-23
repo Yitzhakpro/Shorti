@@ -8,7 +8,6 @@ import {
   Login,
   Register,
   LinksList,
-  CreateLink,
   NotFound,
 } from './components';
 import { AuthProvider } from './providers';
@@ -32,7 +31,6 @@ function App() {
             <Route path="/u/register" element={<Register />} />
             <Route element={<ProtectedLayout />}>
               <Route path="/u/allLinks" element={<LinksList />} />
-              <Route path="/u/createLinks" element={<CreateLink />} />
             </Route>
             <Route path="/u/404" element={<NotFound />} />
             <Route path="*" element={<NotFound />} />
