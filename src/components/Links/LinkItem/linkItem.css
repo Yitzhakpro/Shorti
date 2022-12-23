@@ -1,0 +1,20 @@
+.link-item {
+  padding: 15px;
+}
+
+.link-item-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  white-space: nowrap;
+}
+
+.link-item-footer-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+hr.link-item-footer-info-divider {
+  margin: 0 10%;
+}

@@ -1,21 +1,49 @@
 import React from 'react';
-import { Paper } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Button, Divider, Paper, Typography } from '@mui/material';
+import { fromNow } from '../../../utils';
 import type { UrlInfo } from '../../../types';
+import './linkItem.css';
 
 interface ILinkItemProps {
   linkInfo: UrlInfo;
+  handleDelete: (_id: string) => Promise<void>;
 }
 
 function LinkItem(props: ILinkItemProps): JSX.Element {
-  const { id, fullUrl, linkId, views, createdAt } = props.linkInfo;
+  const { linkInfo, handleDelete } = props;
+  const { id, fullUrl, linkId, views, createdAt } = linkInfo;
+
+  const handleDeleteLink = async (): Promise<void> => {
+    await handleDelete(id);
+  };
 
   return (
-    <Paper>
-      <p>{id}</p>
-      <p>{fullUrl}</p>
-      <p>{linkId}</p>
-      <p>{views}</p>
-      <p>{createdAt.toString()}</p>
+    <Paper className="link-item" elevation={2}>
+      <Typography>{`${window.location.host}/${linkId}`}</Typography>
+      <Typography>{fullUrl}</Typography>
+
+      <div className="link-item-footer">
+        <div className="link-item-footer-info">
+          {views > 0 && (
+            <>
+              <Typography>{views} clicks</Typography>
+              <Divider
+                className="link-item-footer-info-divider"
+                orientation="vertical"
+                variant="middle"
+              />
+            </>
+          )}
+          <Typography>{fromNow(createdAt)}</Typography>
+        </div>
+
+        <div className="link-item-footer-actions">
+          <Button startIcon={<DeleteIcon />} onClick={handleDeleteLink}>
+            DELETE
+          </Button>
+        </div>
+      </div>
     </Paper>
   );
 }
