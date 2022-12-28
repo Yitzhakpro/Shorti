@@ -1,0 +1,11 @@
+div.register-form-container {
+  padding: 5% 10%;
+  margin-top: 30%;
+
+  border-radius: 15px;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+}

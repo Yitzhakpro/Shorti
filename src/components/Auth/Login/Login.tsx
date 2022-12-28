@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { Container, Button, Paper, TextField } from '@mui/material';
 import { useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { useAuth } from '../../../hooks';
+import './login.css';
 
 function Login(): JSX.Element {
   const navigate = useNavigate();
@@ -35,15 +37,38 @@ function Login(): JSX.Element {
   }
 
   return (
-    <form onSubmit={handleLogin}>
-      <span>Email:</span>
-      <input type="email" name="email" value={loginInfo.email} onChange={handleChange} />
+    <Container maxWidth="sm">
+      <Paper className="login-form-container" elevation={3}>
+        <form className="login-form" onSubmit={handleLogin}>
+          <TextField
+            type="email"
+            name="email"
+            label="Email Address"
+            autoFocus
+            margin="dense"
+            fullWidth
+            variant="standard"
+            required
+            value={loginInfo.email}
+            onChange={handleChange}
+          />
 
-      <span>Password:</span>
-      <input type="password" name="password" value={loginInfo.password} onChange={handleChange} />
+          <TextField
+            type="password"
+            name="password"
+            label="Password"
+            margin="dense"
+            fullWidth
+            variant="standard"
+            required
+            value={loginInfo.password}
+            onChange={handleChange}
+          />
 
-      <button type="submit">Login</button>
-    </form>
+          <Button type="submit">Login</Button>
+        </form>
+      </Paper>
+    </Container>
   );
 }
 

@@ -41,6 +41,8 @@ function CreateLinkDialog(props: ICreateLinkDialogProps): JSX.Element {
           margin="dense"
           fullWidth
           variant="standard"
+          required
+          value={fullUrl}
           onChange={handleFullUrlChange}
         />
       </DialogContent>

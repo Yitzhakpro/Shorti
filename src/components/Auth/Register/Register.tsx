@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { Container, Button, Paper, TextField } from '@mui/material';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { useAuth } from '../../../hooks';
+import './register.css';
 
 function Register(): JSX.Element {
   const navigate = useNavigate();
@@ -33,31 +35,62 @@ function Register(): JSX.Element {
   }
 
   return (
-    <form onSubmit={handleRegister}>
-      <span>Username:</span>
-      <input type="text" name="username" value={registerInfo.username} onChange={handleChange} />
+    <Container maxWidth="sm">
+      <Paper className="register-form-container" elevation={3}>
+        <form className="register-form" onSubmit={handleRegister}>
+          <TextField
+            type="text"
+            name="username"
+            label="Username"
+            autoFocus
+            margin="dense"
+            fullWidth
+            variant="standard"
+            required
+            value={registerInfo.username}
+            onChange={handleChange}
+          />
 
-      <span>Email:</span>
-      <input type="email" name="email" value={registerInfo.email} onChange={handleChange} />
+          <TextField
+            type="email"
+            name="email"
+            label="Email Address"
+            margin="dense"
+            fullWidth
+            variant="standard"
+            required
+            value={registerInfo.email}
+            onChange={handleChange}
+          />
 
-      <span>Password:</span>
-      <input
-        type="password"
-        name="password"
-        value={registerInfo.password}
-        onChange={handleChange}
-      />
+          <TextField
+            type="password"
+            name="password"
+            label="Password"
+            margin="dense"
+            fullWidth
+            variant="standard"
+            required
+            value={registerInfo.password}
+            onChange={handleChange}
+          />
 
-      <span>Repeat Password:</span>
-      <input
-        type="password"
-        name="confirmPassword"
-        value={registerInfo.confirmPassword}
-        onChange={handleChange}
-      />
+          <TextField
+            type="password"
+            name="confirmPassword"
+            label="Confirm Password"
+            margin="dense"
+            fullWidth
+            variant="standard"
+            required
+            value={registerInfo.confirmPassword}
+            onChange={handleChange}
+          />
 
-      <button type="submit">Register</button>
-    </form>
+          <Button type="submit">Register</Button>
+        </form>
+      </Paper>
+    </Container>
   );
 }
 

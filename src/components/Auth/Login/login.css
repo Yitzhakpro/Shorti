@@ -1,0 +1,11 @@
+div.login-form-container {
+  padding: 5% 10%;
+  margin-top: 40%;
+
+  border-radius: 15px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
