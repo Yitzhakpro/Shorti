@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Toolbar, Box, Typography } from '@mui/material';
+import { AppBar, Toolbar, Box, Typography, Button } from '@mui/material';
 import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../../../hooks';
 import LoggedInSection from './LoggedInSection';
@@ -18,10 +18,11 @@ function Navbar(): JSX.Element {
           <Typography className="shorti-title" variant="h6" component="div">
             <Link to="/">Shorti</Link>
           </Typography>
+
           {isLoggedIn &&
             pages.map((pageInfo) => (
-              <NavLink key={pageInfo.name} to={pageInfo.link}>
-                {pageInfo.name}
+              <NavLink className="page-link" key={pageInfo.name} to={pageInfo.link}>
+                <Button sx={{ my: 2, color: 'white', display: 'block' }}>{pageInfo.name}</Button>
               </NavLink>
             ))}
         </Box>
