@@ -18,7 +18,7 @@ function LinksList(): JSX.Element {
   return (
     <>
       <Container className="links-list" maxWidth="md">
-        {isLoading && <SkeletonList variant="rectangular" height={80} rows={4} />}
+        {isLoading && <SkeletonList variant="rectangular" height={80} rows={15} />}
         {isError && <p>error fetching</p>}
         {linksList &&
           linksList.map((urlInfo) => {

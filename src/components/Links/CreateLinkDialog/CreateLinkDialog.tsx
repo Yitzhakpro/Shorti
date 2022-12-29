@@ -7,7 +7,6 @@ import {
   Button,
   DialogActions,
 } from '@mui/material';
-import './createLinkDialog.css';
 
 interface ICreateLinkDialogProps {
   isOpen: boolean;
