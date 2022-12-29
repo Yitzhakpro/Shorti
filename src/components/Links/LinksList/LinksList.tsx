@@ -1,15 +1,49 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import Add from '@mui/icons-material/Add';
 import { Container, Fab } from '@mui/material';
 import { useLinks, useModal } from '../../../hooks';
 import { SkeletonList } from '../../../utilComponents';
 import CreateLinkDialog from '../CreateLinkDialog';
+import DeleteLinkPopper from '../DeleteLinkPopper';
 import LinkItem from '../LinkItem';
 import './linksList.css';
 
 function LinksList(): JSX.Element {
   const { isLoading, linksList, isError, createLink, deleteLink } = useLinks();
   const [addShortiOpen, setIsShortiOpen, toggleShorti] = useModal();
+
+  const [deleteAnchorEl, setDeleteAnchorEl] = useState<null | HTMLElement>(null);
+  const [deleteId, setDeleteId] = useState('');
+
+  const isDeleteConfirmationOpen = Boolean(deleteAnchorEl);
+
+  const openDeleteConfirmation = (element: EventTarget & HTMLElement, id: string): void => {
+    if (deleteAnchorEl && deleteAnchorEl.id === element.id) {
+      setDeleteAnchorEl(null);
+      setDeleteId('');
+    } else if (deleteAnchorEl && deleteAnchorEl.id !== element.id) {
+      setDeleteAnchorEl(element);
+      setDeleteId(id);
+    } else {
+      setDeleteAnchorEl(element);
+      setDeleteId(id);
+    }
+  };
+
+  const closeDeleteConfirmation = (): void => {
+    setDeleteAnchorEl(null);
+    setDeleteId('');
+  };
+
+  const handleDeleteLink = async (): Promise<void> => {
+    if (!deleteId) {
+      return;
+    }
+
+    await deleteLink(deleteId);
+    setDeleteAnchorEl(null);
+    setDeleteId('');
+  };
 
   const closeCreateLinkDialog = useCallback(() => {
     setIsShortiOpen(false);
@@ -22,9 +56,18 @@ function LinksList(): JSX.Element {
         {isError && <p>error fetching</p>}
         {linksList &&
           linksList.map((urlInfo) => {
-            return <LinkItem key={urlInfo.id} linkInfo={urlInfo} handleDelete={deleteLink} />;
+            return (
+              <LinkItem key={urlInfo.id} linkInfo={urlInfo} handleDelete={openDeleteConfirmation} />
+            );
           })}
       </Container>
+
+      <DeleteLinkPopper
+        open={isDeleteConfirmationOpen}
+        anchorEl={deleteAnchorEl}
+        handleClose={closeDeleteConfirmation}
+        handleDelete={handleDeleteLink}
+      />
 
       <CreateLinkDialog
         isOpen={addShortiOpen}
