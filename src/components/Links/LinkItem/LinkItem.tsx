@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Button, Divider, Paper, Typography } from '@mui/material';
 import { fromNow } from '../../../utils';
@@ -7,15 +7,19 @@ import './linkItem.css';
 
 interface ILinkItemProps {
   linkInfo: UrlInfo;
-  handleDelete: (_id: string) => Promise<void>;
+  handleDelete: (_element: EventTarget & HTMLElement, _id: string) => void;
 }
 
 function LinkItem(props: ILinkItemProps): JSX.Element {
   const { linkInfo, handleDelete } = props;
   const { id, fullUrl, linkId, views, createdAt } = linkInfo;
 
-  const handleDeleteLink = async (): Promise<void> => {
-    await handleDelete(id);
+  const deleteBtnId = useId();
+
+  const handleDeleteLink = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): Promise<void> => {
+    handleDelete(event.currentTarget, id);
   };
 
   return (
@@ -39,7 +43,11 @@ function LinkItem(props: ILinkItemProps): JSX.Element {
         </div>
 
         <div className="link-item-footer-actions">
-          <Button startIcon={<DeleteIcon />} onClick={handleDeleteLink}>
+          <Button
+            id={`delete-${deleteBtnId}`}
+            startIcon={<DeleteIcon />}
+            onClick={handleDeleteLink}
+          >
             DELETE
           </Button>
         </div>
