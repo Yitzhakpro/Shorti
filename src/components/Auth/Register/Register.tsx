@@ -87,7 +87,9 @@ function Register(): JSX.Element {
             onChange={handleChange}
           />
 
-          <Button type="submit">Register</Button>
+          <Button className="register-btn" type="submit" variant="contained">
+            Register
+          </Button>
         </form>
       </Paper>
     </Container>

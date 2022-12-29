@@ -9,3 +9,9 @@ div.register-form-container {
   display: flex;
   flex-direction: column;
 }
+
+button.register-btn {
+  margin-top: 5%;
+  width: fit-content;
+  align-self: center;
+}

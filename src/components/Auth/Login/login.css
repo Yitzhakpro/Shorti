@@ -9,3 +9,9 @@ div.login-form-container {
   display: flex;
   flex-direction: column;
 }
+
+button.login-btn {
+  margin-top: 5%;
+  width: fit-content;
+  align-self: center;
+}

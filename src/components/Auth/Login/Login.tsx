@@ -65,7 +65,9 @@ function Login(): JSX.Element {
             onChange={handleChange}
           />
 
-          <Button type="submit">Login</Button>
+          <Button className="login-btn" type="submit" variant="contained">
+            Login
+          </Button>
         </form>
       </Paper>
     </Container>

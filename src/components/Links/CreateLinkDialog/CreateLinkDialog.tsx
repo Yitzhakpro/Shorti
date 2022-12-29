@@ -7,6 +7,7 @@ import {
   Button,
   DialogActions,
 } from '@mui/material';
+import './createLinkDialog.css';
 
 interface ICreateLinkDialogProps {
   isOpen: boolean;
@@ -31,7 +32,12 @@ function CreateLinkDialog(props: ICreateLinkDialogProps): JSX.Element {
   };
 
   return (
-    <Dialog open={isOpen} onClose={handleClose}>
+    <Dialog
+      className="create-link-dialog"
+      PaperProps={{ style: { borderRadius: '15px' } }}
+      open={isOpen}
+      onClose={handleClose}
+    >
       <DialogTitle align="center">Add Shorti</DialogTitle>
       <DialogContent>
         <TextField
@@ -48,7 +54,9 @@ function CreateLinkDialog(props: ICreateLinkDialogProps): JSX.Element {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>cancel</Button>
-        <Button onClick={handleCreateShorti}>create</Button>
+        <Button variant="contained" onClick={handleCreateShorti}>
+          create
+        </Button>
       </DialogActions>
     </Dialog>
   );
