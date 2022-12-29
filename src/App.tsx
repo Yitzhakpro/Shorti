@@ -1,7 +1,15 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Routes, Route } from 'react-router-dom';
-import { Layout, ProtectedLayout, Login, Register, AllLinks, CreateLink } from './components';
+import {
+  Layout,
+  ProtectedLayout,
+  Homepage,
+  Login,
+  Register,
+  LinksList,
+  NotFound,
+} from './components';
 import { AuthProvider } from './providers';
 
 const queryClient = new QueryClient({
@@ -18,14 +26,14 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route element={<Layout />}>
-            <Route path="/" element={<h1>homepage</h1>} />
+            <Route path="/" element={<Homepage />} />
             <Route path="/u/login" element={<Login />} />
             <Route path="/u/register" element={<Register />} />
             <Route element={<ProtectedLayout />}>
-              <Route path="/u/allLinks" element={<AllLinks />} />
-              <Route path="/u/createLinks" element={<CreateLink />} />
+              <Route path="/u/allLinks" element={<LinksList />} />
             </Route>
-            <Route path="*" element={<h1>404</h1>} />
+            <Route path="/u/404" element={<NotFound />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </AuthProvider>

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { Container, Button, Paper, TextField } from '@mui/material';
+import { useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { useAuth } from '../../../hooks';
+import './login.css';
 
 function Login(): JSX.Element {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login } = useAuth();
+  const { isLoggedIn, login } = useAuth();
 
   const [loginInfo, setLoginInfo] = useState({
     email: '',
@@ -24,22 +26,51 @@ function Login(): JSX.Element {
 
     if (success) {
       const { state } = location;
-      const gotFromUrl = state.from ? state.from.pathname ?? '/' : '/';
+      const gotFromUrl = state && state.from ? state.from.pathname ?? '/' : '/';
 
       navigate(gotFromUrl, { replace: true });
     }
   };
 
+  if (isLoggedIn) {
+    return <Navigate to="/" replace={true} />;
+  }
+
   return (
-    <form onSubmit={handleLogin}>
-      <span>Email:</span>
-      <input type="email" name="email" value={loginInfo.email} onChange={handleChange} />
+    <Container maxWidth="sm">
+      <Paper className="login-form-container" elevation={3}>
+        <form className="login-form" onSubmit={handleLogin}>
+          <TextField
+            type="email"
+            name="email"
+            label="Email Address"
+            autoFocus
+            margin="dense"
+            fullWidth
+            variant="standard"
+            required
+            value={loginInfo.email}
+            onChange={handleChange}
+          />
 
-      <span>Password:</span>
-      <input type="password" name="password" value={loginInfo.password} onChange={handleChange} />
+          <TextField
+            type="password"
+            name="password"
+            label="Password"
+            margin="dense"
+            fullWidth
+            variant="standard"
+            required
+            value={loginInfo.password}
+            onChange={handleChange}
+          />
 
-      <button type="submit">Login</button>
-    </form>
+          <Button className="login-btn" type="submit" variant="contained">
+            Login
+          </Button>
+        </form>
+      </Paper>
+    </Container>
   );
 }
 
