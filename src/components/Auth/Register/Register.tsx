@@ -2,7 +2,28 @@ import React, { useState } from 'react';
 import { Container, Button, Paper, TextField } from '@mui/material';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { useAuth } from '../../../hooks';
+import { validateRegisterForm } from './utils';
+import type { RegisterValidationErrors } from './types';
 import './register.css';
+
+const createMultiLineJSX = (strings: string[]): JSX.Element => {
+  return (
+    <>
+      {strings.map((string, index) => {
+        if (index < strings.length - 1) {
+          return (
+            <div key={index}>
+              <span>{string}</span>
+              <br />
+            </div>
+          );
+        }
+
+        return <span key={index}>{string}</span>;
+      })}
+    </>
+  );
+};
 
 function Register(): JSX.Element {
   const navigate = useNavigate();
@@ -14,6 +35,12 @@ function Register(): JSX.Element {
     password: '',
     confirmPassword: '',
   });
+  const [registerErrors, setRegisterErrors] = useState<RegisterValidationErrors>({
+    username: [],
+    email: [],
+    password: [],
+    confirmPassword: [],
+  });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setRegisterInfo({ ...registerInfo, [event.target.name]: event.target.value });
@@ -22,9 +49,26 @@ function Register(): JSX.Element {
   const handleRegister = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
 
-    const { email, username, password } = registerInfo;
-    const success = await register(email, username, password);
+    setRegisterErrors({
+      username: [],
+      email: [],
+      password: [],
+      confirmPassword: [],
+    });
 
+    const { email, username, password, confirmPassword } = registerInfo;
+    const registerFormValidations = validateRegisterForm(
+      username,
+      email,
+      password,
+      confirmPassword
+    );
+    if (Object.keys(registerFormValidations).length > 0) {
+      setRegisterErrors(registerFormValidations as RegisterValidationErrors);
+      return;
+    }
+
+    const success = await register(email, username, password);
     if (success) {
       navigate('/');
     }
@@ -47,6 +91,10 @@ function Register(): JSX.Element {
             fullWidth
             variant="standard"
             required
+            error={registerErrors.username.length > 0}
+            helperText={
+              registerErrors.username.length > 0 && createMultiLineJSX(registerErrors.username)
+            }
             value={registerInfo.username}
             onChange={handleChange}
           />
@@ -59,6 +107,8 @@ function Register(): JSX.Element {
             fullWidth
             variant="standard"
             required
+            error={registerErrors.email.length > 0}
+            helperText={registerErrors.email.length > 0 && createMultiLineJSX(registerErrors.email)}
             value={registerInfo.email}
             onChange={handleChange}
           />
@@ -71,6 +121,10 @@ function Register(): JSX.Element {
             fullWidth
             variant="standard"
             required
+            error={registerErrors.password.length > 0}
+            helperText={
+              registerErrors.password.length > 0 && createMultiLineJSX(registerErrors.password)
+            }
             value={registerInfo.password}
             onChange={handleChange}
           />
@@ -83,6 +137,11 @@ function Register(): JSX.Element {
             fullWidth
             variant="standard"
             required
+            error={registerErrors.confirmPassword.length > 0}
+            helperText={
+              registerErrors.confirmPassword.length > 0 &&
+              createMultiLineJSX(registerErrors.confirmPassword)
+            }
             value={registerInfo.confirmPassword}
             onChange={handleChange}
           />
