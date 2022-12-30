@@ -35,6 +35,7 @@ function CreateLinkDialog(props: ICreateLinkDialogProps): JSX.Element {
     }
 
     await createLink(fullUrl);
+    setFullUrl('');
     handleClose();
   };
 

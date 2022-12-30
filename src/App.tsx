@@ -1,6 +1,7 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import {
   Layout,
   ProtectedLayout,
@@ -11,6 +12,7 @@ import {
   NotFound,
 } from './components';
 import { AuthProvider } from './providers';
+import 'react-toastify/dist/ReactToastify.css';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,6 +38,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
+        <ToastContainer position="bottom-right" />
       </AuthProvider>
     </QueryClientProvider>
   );
