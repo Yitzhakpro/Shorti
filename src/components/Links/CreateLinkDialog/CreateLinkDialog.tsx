@@ -7,6 +7,7 @@ import {
   Button,
   DialogActions,
 } from '@mui/material';
+import { isUrl } from '../../../utils';
 
 interface ICreateLinkDialogProps {
   isOpen: boolean;
@@ -25,6 +26,13 @@ function CreateLinkDialog(props: ICreateLinkDialogProps): JSX.Element {
 
   const handleCreateShorti = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
+
+    if (!isUrl(fullUrl)) {
+      // TODO: handle invalid full url better
+      console.error('full url not valid');
+      setFullUrl('');
+      return;
+    }
 
     await createLink(fullUrl);
     handleClose();
