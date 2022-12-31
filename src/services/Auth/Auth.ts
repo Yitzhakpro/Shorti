@@ -1,5 +1,6 @@
 import { endpointsConfig } from '../../config';
 import { createEnhancedClient } from '../../utils';
+import { parseAxiosError } from '../utils';
 import type { UserInfo } from '../../types';
 import type { AxiosInstance } from 'axios';
 
@@ -21,8 +22,7 @@ class AuthService {
 
       return resp.data;
     } catch (err) {
-      console.log(err);
-      throw new Error('Cant get is logged in user info');
+      return null;
     }
   }
 
@@ -31,9 +31,13 @@ class AuthService {
       const resp = await this.axiosClient.post<UserInfo>('/login', { email, password });
 
       return resp.data;
-    } catch (err) {
-      console.log(err);
-      throw new Error('Cant login');
+    } catch (error: any) {
+      const LOGIN_ERROR_CODES_TRANSLATION = {
+        WRONG_CREDENTIALS_ERROR: 'Wrong credentials.',
+        ERROR_FAILED_TO_RETRIVE_USER_INFO: 'Failed to login, try again later.',
+      };
+
+      return parseAxiosError(error, LOGIN_ERROR_CODES_TRANSLATION);
     }
   }
 
@@ -46,9 +50,13 @@ class AuthService {
       });
 
       return resp.data;
-    } catch (err) {
-      console.log(err);
-      throw new Error('Cant register');
+    } catch (error) {
+      const REGISTER_ERROR_CODES_TRANSLATION = {
+        USER_CREATE_VALIDATION_ERROR: 'Incorrect register values.',
+        USER_CREATE_ERROR: 'Failed to register, try again later.',
+      };
+
+      return parseAxiosError(error, REGISTER_ERROR_CODES_TRANSLATION);
     }
   }
 
@@ -57,9 +65,8 @@ class AuthService {
       const resp = await this.axiosClient.post<'Ok'>('/logout');
 
       return resp.data;
-    } catch (err) {
-      console.log(err);
-      throw new Error('Cant logout');
+    } catch (error) {
+      return 'Ok';
     }
   }
 }
