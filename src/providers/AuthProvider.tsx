@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AuthContext } from '../context';
 import { Auth } from '../services';
+import { notifyLoading, updateNotify } from '../utils';
 
 interface IAuthProviderProps {
   children: React.ReactNode | React.ReactNode[];
@@ -28,7 +29,6 @@ function AuthProvider(props: IAuthProviderProps): JSX.Element {
         }
       })
       .catch((err) => {
-        console.log(err);
         setAuthInfo({ isLoggedIn: false, email: '', username: '' });
         setIsError({ isError: true, error: err });
         setIsLoading(false);
@@ -60,6 +60,7 @@ function AuthProvider(props: IAuthProviderProps): JSX.Element {
   const register = async (email: string, username: string, password: string): Promise<boolean> => {
     setAuthInfo({ isLoggedIn: false, email: '', username: '' });
 
+    const loadingId = notifyLoading('Creating a user for you...');
     try {
       const registerResponse = await Auth.register(email, username, password);
 
@@ -68,10 +69,12 @@ function AuthProvider(props: IAuthProviderProps): JSX.Element {
         email: registerResponse.email,
         username: registerResponse.username,
       });
+      updateNotify(loadingId, 'Registered successfully.', 'success');
 
       return true;
-    } catch (err) {
+    } catch (error: any) {
       setAuthInfo({ isLoggedIn: false, email: '', username: '' });
+      updateNotify(loadingId, error.message, 'error');
 
       return false;
     }
@@ -80,6 +83,7 @@ function AuthProvider(props: IAuthProviderProps): JSX.Element {
   const login = async (email: string, password: string): Promise<boolean> => {
     setAuthInfo({ isLoggedIn: false, email: '', username: '' });
 
+    const loadingId = notifyLoading('Checking your account...');
     try {
       const loginResponse = await Auth.login(email, password);
 
@@ -88,10 +92,12 @@ function AuthProvider(props: IAuthProviderProps): JSX.Element {
         email: loginResponse.email,
         username: loginResponse.username,
       });
+      updateNotify(loadingId, 'Logged in successfully.', 'success');
 
       return true;
-    } catch (err) {
+    } catch (error: any) {
       setAuthInfo({ isLoggedIn: false, email: '', username: '' });
+      updateNotify(loadingId, error.message, 'error');
 
       return false;
     }
