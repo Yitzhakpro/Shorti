@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Links } from '../services';
+import { notifyLoading, updateNotify } from '../utils';
 import type { UrlInfo } from '../types';
 
 function useLinks() {
@@ -25,14 +26,16 @@ function useLinks() {
 
   const createLink = useCallback(
     async (fullUrl: string): Promise<void> => {
+      const loadingId = notifyLoading('Creating a shorti...');
       try {
         const addedLink = await Links.createShortUrl(fullUrl);
 
         const newLinksList = [...linksList, addedLink];
 
         setLinksList(newLinksList);
-      } catch (error) {
-        console.error(error);
+        updateNotify(loadingId, 'Created a shorti :)', 'success');
+      } catch (error: any) {
+        updateNotify(loadingId, error.message, 'error');
       }
     },
     [linksList]
@@ -40,6 +43,7 @@ function useLinks() {
 
   const deleteLink = useCallback(
     async (id: string): Promise<void> => {
+      const loadingId = notifyLoading('deleting a shorti...');
       try {
         await Links.deleteShortUrl(id);
 
@@ -48,8 +52,9 @@ function useLinks() {
         });
 
         setLinksList(filteredLinks);
-      } catch (error) {
-        console.error(error);
+        updateNotify(loadingId, 'Deleted a shorti :(', 'success');
+      } catch (error: any) {
+        updateNotify(loadingId, error.message, 'error');
       }
     },
     [linksList]
