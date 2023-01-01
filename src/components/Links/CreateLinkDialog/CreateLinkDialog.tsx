@@ -19,6 +19,7 @@ function CreateLinkDialog(props: ICreateLinkDialogProps): JSX.Element {
   const { isOpen, handleClose, createLink } = props;
 
   const [fullUrl, setFullUrl] = useState('');
+  const [fullUrlError, setFullUrlError] = useState(false);
 
   const handleFullUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFullUrl(event.target.value);
@@ -26,15 +27,15 @@ function CreateLinkDialog(props: ICreateLinkDialogProps): JSX.Element {
 
   const handleCreateShorti = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
+    setFullUrlError(false);
 
     if (!isUrl(fullUrl)) {
-      // TODO: handle invalid full url better
-      console.error('full url not valid');
-      setFullUrl('');
+      setFullUrlError(true);
       return;
     }
 
     await createLink(fullUrl);
+    setFullUrl('');
     handleClose();
   };
 
@@ -55,6 +56,8 @@ function CreateLinkDialog(props: ICreateLinkDialogProps): JSX.Element {
           fullWidth
           variant="standard"
           required
+          error={fullUrlError}
+          helperText={fullUrlError && 'Invalid url'}
           value={fullUrl}
           onChange={handleFullUrlChange}
         />
