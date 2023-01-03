@@ -1,31 +1,35 @@
 
 server {
     listen 80;
+    root /usr/share/nginx/html/;
+    include /etc/nginx/mime.types;
+
+    location = / {
+        try_files /index.html =404;
+    }
+
+    location /assets {
+        try_files $uri $uri/ /index.html;
+    }
+
+    location /u/login {
+        try_files /index.html =404;
+    }
+
+    location /u/register {
+        try_files /index.html =404;
+    }
+
+    location /u/allLinks {
+        try_files /index.html =404;
+    }
+
+    location /u/404 {
+        try_files /index.html =404;
+    }
 
     location / {
-        root /usr/share/nginx/html/;
-        include /etc/nginx/mime.types;
-        try_files /index.html =404;
-
-        location /assets {
-            try_files $uri $uri/ /index.html;
-        }
-
-        location /u/login {
-            try_files /index.html =404;
-        }
-
-        location /u/register {
-            try_files /index.html =404;
-        }
-
-        location /u/allLinks {
-            try_files /index.html =404;
-        }
-
-        location ~ "^/[a-zA-Z0-9]{8}" {
-            proxy_pass ${NGINX_SHORT_API}/api/links/getShortUrl$uri;
-        }
+        proxy_pass ${NGINX_SHORT_API}/api/links/getShortUrl?linkId=$uri;
     }
 
 }

@@ -1,5 +1,5 @@
-import * as dayjs from 'dayjs';
-import RelativeTime from 'dayjs/plugin/relativeTime';
+import dayjs from 'dayjs/esm/index.js';
+import RelativeTime from 'dayjs/esm/plugin/relativeTime';
 
 dayjs.extend(RelativeTime);
 
