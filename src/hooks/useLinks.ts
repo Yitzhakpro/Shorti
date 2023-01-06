@@ -8,8 +8,7 @@ function useLinks() {
   const [linksList, setLinksList] = useState<UrlInfo[]>([]);
   const [isError, setIsError] = useState(false);
 
-  // TODO: re-think in react query
-  useEffect(() => {
+  const fetchLinks = (): void => {
     setIsLoading(true);
     setIsError(false);
 
@@ -22,6 +21,11 @@ function useLinks() {
         setIsError(true);
         setIsLoading(false);
       });
+  };
+
+  // TODO: re-think in react query
+  useEffect(() => {
+    fetchLinks();
   }, []);
 
   const createLink = useCallback(
@@ -60,7 +64,7 @@ function useLinks() {
     [linksList]
   );
 
-  return { isLoading, linksList, isError, createLink, deleteLink };
+  return { isLoading, linksList, isError, fetchLinks, createLink, deleteLink };
 }
 
 export default useLinks;

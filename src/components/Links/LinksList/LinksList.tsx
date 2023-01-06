@@ -6,10 +6,11 @@ import { SkeletonList } from '../../../utilComponents';
 import CreateLinkDialog from '../CreateLinkDialog';
 import DeleteLinkPopper from '../DeleteLinkPopper';
 import LinkItem from '../LinkItem';
+import LinksFetchingError from '../LinksFetchingError';
 import './linksList.css';
 
 function LinksList(): JSX.Element {
-  const { isLoading, linksList, isError, createLink, deleteLink } = useLinks();
+  const { isLoading, linksList, isError, fetchLinks, createLink, deleteLink } = useLinks();
   const [addShortiOpen, setIsShortiOpen, toggleShorti] = useModal();
 
   const [deleteAnchorEl, setDeleteAnchorEl] = useState<null | HTMLElement>(null);
@@ -53,7 +54,7 @@ function LinksList(): JSX.Element {
     <>
       <Container className="links-list" maxWidth="md">
         {isLoading && <SkeletonList variant="rectangular" height={80} rows={15} />}
-        {isError && <p>error fetching</p>}
+        {isError && <LinksFetchingError refetchLinks={fetchLinks} />}
         {linksList &&
           linksList.map((urlInfo) => {
             return (
