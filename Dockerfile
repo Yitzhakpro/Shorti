@@ -4,7 +4,12 @@ FROM node:16-alpine as builder
 WORKDIR /app
 COPY . .
 
+# Installing deps
 RUN yarn
+
+# Building react
+ARG VITE_API_URL=http://localhost:8080
+ENV VITE_API_URL=${VITE_API_URL}
 RUN yarn build
 
 # Serving the project on nginx
