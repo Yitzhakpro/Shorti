@@ -19,7 +19,6 @@ a.link-item-fullurl {
 
   display: flex;
   flex-direction: row;
-  align-items: center;
   white-space: nowrap;
 }
 
@@ -32,7 +31,7 @@ a.link-item-fullurl {
 
 
 hr.link-item-footer-info-divider {
-  margin: 0 10%;
+  margin: 0 2%;
 }
 
 .link-item-footer-actions {
