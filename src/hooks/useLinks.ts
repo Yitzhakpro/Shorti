@@ -29,10 +29,10 @@ function useLinks() {
   }, []);
 
   const createLink = useCallback(
-    async (fullUrl: string): Promise<void> => {
+    async (fullUrl: string, customEnding?: string): Promise<void> => {
       const loadingId = notifyLoading('Creating a shorti...');
       try {
-        const addedLink = await Links.createShortUrl(fullUrl);
+        const addedLink = await Links.createShortUrl(fullUrl, customEnding);
 
         const newLinksList = [...linksList, addedLink];
 

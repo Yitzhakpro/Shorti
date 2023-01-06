@@ -43,9 +43,13 @@ class LinksService {
     }
   }
 
-  public async createShortUrl(fullUrl: string): Promise<UrlInfo> {
+  public async createShortUrl(fullUrl: string, linkName?: string): Promise<UrlInfo> {
     try {
-      const resp = await this.axiosClient.post<UrlInfoResponse>('/createShortUrl', { fullUrl });
+      const createBody = {
+        fullUrl,
+        linkName: linkName ? linkName : undefined,
+      };
+      const resp = await this.axiosClient.post<UrlInfoResponse>('/createShortUrl', createBody);
       const { id, fullUrl: responseFullUrl, linkId, views, createdAt } = resp.data;
 
       return {
@@ -60,6 +64,7 @@ class LinksService {
         FAILED_TO_RETRIVE_LINK_INFO: 'Failed to retrive short links info.',
         BAD_TOKEN_ERROR: 'Auth error, try to login / re-login.',
         URL_CREATE_VALIDATION_ERROR: 'Bad url creation parameters, enter valid parameters.',
+        URL_CREATE_ALREADY_EXIST_ERROR: 'Custom ending already exists.',
         URL_CREATE_ERROR: 'Failed to create short url, try again later.',
       };
 

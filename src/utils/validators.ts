@@ -1,5 +1,17 @@
 import validator from 'validator';
 
+export const isValidCustomEnding = (string: string): boolean => {
+  if (string.indexOf(' ') > 0) {
+    return false;
+  }
+
+  if (string.length > 30) {
+    return false;
+  }
+
+  return true;
+};
+
 export const isUrl = (string: string): boolean => {
   return validator.isURL(string);
 };
