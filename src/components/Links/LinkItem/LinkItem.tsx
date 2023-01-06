@@ -2,7 +2,7 @@ import React, { useId } from 'react';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Button, Divider, Paper, Typography } from '@mui/material';
-import { fromNow } from '../../../utils';
+import { fromNow, notifyError } from '../../../utils';
 import type { UrlInfo } from '../../../types';
 import './linkItem.css';
 
@@ -17,8 +17,13 @@ function LinkItem(props: ILinkItemProps): JSX.Element {
 
   const deleteBtnId = useId();
 
-  const copyShortUrl = (): void => {
-    //
+  const copyShortUrl = async (): Promise<void> => {
+    try {
+      const fullShortLink = `${window.location.host}/${linkId}`;
+      await navigator.clipboard.writeText(fullShortLink);
+    } catch (_err) {
+      notifyError('Failed to copy link to clipboard');
+    }
   };
 
   const handleDeleteLink = async (
