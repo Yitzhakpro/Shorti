@@ -2,19 +2,59 @@
   padding: 15px;
 }
 
+p.link-item-shorti-link {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+a.link-item-fullurl {
+  display: block;
+  width: fit-content;
+  text-decoration: none;
+  color: #1976d2;
+}
+
 .link-item-footer {
+  margin-top: 15px;
+
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   white-space: nowrap;
 }
 
 .link-item-footer-info {
+  flex-grow: 1;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
 hr.link-item-footer-info-divider {
-  margin: 0 10%;
+  margin: 0 2%;
+}
+
+.link-item-footer-actions {
+  flex-grow: 0;
+}
+
+.link-item-footer-actions button {
+  margin: 0 0.5em;
+}
+
+.link-item-footer-actions button:last-child {
+  margin: 0;
+}
+
+.link-item-button-text {
+  font-weight: bold;
+}
+
+@media only screen and (max-width: 768px) {
+  .link-item-footer-actions button .MuiButton-startIcon {
+    margin: 0;
+  }
+
+  .link-item-button-text {
+    display: none;
+  }
 }

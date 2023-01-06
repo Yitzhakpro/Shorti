@@ -1,7 +1,8 @@
 import React, { useId } from 'react';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Button, Divider, Paper, Typography } from '@mui/material';
-import { fromNow } from '../../../utils';
+import { fromNow, notifyError } from '../../../utils';
 import type { UrlInfo } from '../../../types';
 import './linkItem.css';
 
@@ -16,6 +17,15 @@ function LinkItem(props: ILinkItemProps): JSX.Element {
 
   const deleteBtnId = useId();
 
+  const copyShortUrl = async (): Promise<void> => {
+    try {
+      const fullShortLink = `${window.location.host}/${linkId}`;
+      await navigator.clipboard.writeText(fullShortLink);
+    } catch (_err) {
+      notifyError('Failed to copy link to clipboard');
+    }
+  };
+
   const handleDeleteLink = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): Promise<void> => {
@@ -24,14 +34,16 @@ function LinkItem(props: ILinkItemProps): JSX.Element {
 
   return (
     <Paper className="link-item" elevation={2}>
-      <Typography>{`${window.location.host}/${linkId}`}</Typography>
-      <Typography>{fullUrl}</Typography>
+      <Typography className="link-item-shorti-link">{`${window.location.host}/${linkId}`}</Typography>
+      <a className="link-item-fullurl" href={fullUrl} target="_blank" rel="noreferrer">
+        <Typography>{fullUrl}</Typography>
+      </a>
 
       <div className="link-item-footer">
         <div className="link-item-footer-info">
           {views > 0 && (
             <>
-              <Typography>{views} clicks</Typography>
+              <Typography variant="caption">{views} clicks</Typography>
               <Divider
                 className="link-item-footer-info-divider"
                 orientation="vertical"
@@ -39,16 +51,31 @@ function LinkItem(props: ILinkItemProps): JSX.Element {
               />
             </>
           )}
-          <Typography>{fromNow(createdAt)}</Typography>
+          <Typography variant="caption">{fromNow(createdAt)}</Typography>
         </div>
 
         <div className="link-item-footer-actions">
           <Button
+            startIcon={<ContentCopyIcon />}
+            size="small"
+            variant="contained"
+            onClick={copyShortUrl}
+          >
+            <Typography className="link-item-button-text" variant="button">
+              COPY
+            </Typography>
+          </Button>
+          <Button
             id={`delete-${deleteBtnId}`}
             startIcon={<DeleteIcon />}
+            size="small"
+            variant="contained"
+            color="error"
             onClick={handleDeleteLink}
           >
-            DELETE
+            <Typography className="link-item-button-text" variant="button">
+              DELETE
+            </Typography>
           </Button>
         </div>
       </div>
