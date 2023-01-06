@@ -12,7 +12,7 @@ import { isUrl, isValidCustomEnding } from '../../../utils';
 interface ICreateLinkDialogProps {
   isOpen: boolean;
   handleClose: () => void;
-  createLink: (_fullUrl: string, _customEnding: string) => Promise<void>;
+  createLink: (_fullUrl: string, _customEnding: string) => Promise<boolean>;
 }
 
 function CreateLinkDialog(props: ICreateLinkDialogProps): JSX.Element {
@@ -48,10 +48,12 @@ function CreateLinkDialog(props: ICreateLinkDialogProps): JSX.Element {
       return;
     }
 
-    await createLink(fullUrl, customEnding);
-    setFullUrl('');
-    setCustomEnding('');
-    handleClose();
+    const success = await createLink(fullUrl, customEnding);
+    if (success) {
+      setFullUrl('');
+      setCustomEnding('');
+      handleClose();
+    }
   };
 
   return (

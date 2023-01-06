@@ -29,7 +29,7 @@ function useLinks() {
   }, []);
 
   const createLink = useCallback(
-    async (fullUrl: string, customEnding?: string): Promise<void> => {
+    async (fullUrl: string, customEnding?: string): Promise<boolean> => {
       const loadingId = notifyLoading('Creating a shorti...');
       try {
         const addedLink = await Links.createShortUrl(fullUrl, customEnding);
@@ -38,8 +38,12 @@ function useLinks() {
 
         setLinksList(newLinksList);
         updateNotify(loadingId, 'Created a shorti :)', 'success');
+
+        return true;
       } catch (error: any) {
         updateNotify(loadingId, error.message, 'error');
+
+        return false;
       }
     },
     [linksList]
