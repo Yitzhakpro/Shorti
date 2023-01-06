@@ -1,0 +1,12 @@
+.links-fetch-error {
+  height: 100%;
+  margin: 0 !important;
+}
+
+.links-fetch-error-page-content {
+  text-align: center;
+}
+
+.links-fetch-error-page-content button {
+    margin-top: 5%;
+}
