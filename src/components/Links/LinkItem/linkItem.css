@@ -29,7 +29,6 @@ a.link-item-fullurl {
   align-items: center;
 }
 
-
 hr.link-item-footer-info-divider {
   margin: 0 2%;
 }
@@ -48,4 +47,14 @@ hr.link-item-footer-info-divider {
 
 .link-item-button-text {
   font-weight: bold;
+}
+
+@media only screen and (max-width: 768px) {
+  .link-item-footer-actions button .MuiButton-startIcon {
+    margin: 0;
+  }
+
+  .link-item-button-text {
+    display: none;
+  }
 }

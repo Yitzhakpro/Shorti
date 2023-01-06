@@ -46,7 +46,7 @@ function LinkItem(props: ILinkItemProps): JSX.Element {
               />
             </>
           )}
-          <Typography variant="subtitle2">{fromNow(createdAt)}</Typography>
+          <Typography variant="caption">{fromNow(createdAt)}</Typography>
         </div>
 
         <div className="link-item-footer-actions">
