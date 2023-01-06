@@ -21,6 +21,8 @@ function CreateLinkDialog(props: ICreateLinkDialogProps): JSX.Element {
   const [fullUrl, setFullUrl] = useState('');
   const [fullUrlError, setFullUrlError] = useState(false);
 
+  const shouldBeFullscreen = window.innerWidth < 800;
+
   const handleFullUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFullUrl(event.target.value);
   };
@@ -43,6 +45,7 @@ function CreateLinkDialog(props: ICreateLinkDialogProps): JSX.Element {
     <Dialog
       className="create-link-dialog"
       PaperProps={{ style: { borderRadius: '15px' } }}
+      fullScreen={shouldBeFullscreen}
       open={isOpen}
       onClose={handleClose}
     >
