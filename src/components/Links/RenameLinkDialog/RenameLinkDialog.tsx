@@ -29,6 +29,11 @@ function RenameLinkDialog(props: IRenameLinkDialogProps): JSX.Element {
     setCustomEnding(linkInfo.linkId);
   }, [linkInfo.linkId]);
 
+  const handleCloseDialog = (): void => {
+    setCustomEndingError(false);
+    handleClose();
+  };
+
   const handleCustomEndingChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setCustomEnding(event.target.value);
   };
@@ -58,7 +63,7 @@ function RenameLinkDialog(props: IRenameLinkDialogProps): JSX.Element {
       PaperProps={{ style: { borderRadius: '15px' } }}
       fullScreen={shouldBeFullscreen}
       open={isOpen}
-      onClose={handleClose}
+      onClose={handleCloseDialog}
     >
       <DialogTitle align="center">Add Shorti</DialogTitle>
       <DialogContent>
@@ -80,7 +85,7 @@ function RenameLinkDialog(props: IRenameLinkDialogProps): JSX.Element {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>cancel</Button>
+        <Button onClick={handleCloseDialog}>cancel</Button>
         <Button variant="contained" onClick={handleRename}>
           update
         </Button>
