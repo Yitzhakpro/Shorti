@@ -82,6 +82,7 @@ class LinksService {
         URL_RENAME_ALREADY_EXIST_ERROR: `Can't rename to: ${linkName}, because this name is already used`,
         URL_RENAME_NOT_EXIST_ERROR: "Can't rename this url because it doesn't exist.",
         URL_RENAME_FORBIDDEN: "Can't rename this url because its not yours...",
+        URL_RENAME_VALIDATION_ERROR: "Can't rename this url becuase the new name is invalid",
       };
 
       return parseAxiosError(error, RENAME_SHORT_URL_ERROR_CODES_TRANSLATION);
