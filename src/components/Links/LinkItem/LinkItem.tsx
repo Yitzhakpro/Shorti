@@ -9,11 +9,12 @@ import './linkItem.css';
 
 interface ILinkItemProps {
   linkInfo: UrlInfo;
+  handleRename: (_id: string, _linkId: string) => void;
   handleDelete: (_element: EventTarget & HTMLElement, _id: string) => void;
 }
 
 function LinkItem(props: ILinkItemProps): JSX.Element {
-  const { linkInfo, handleDelete } = props;
+  const { linkInfo, handleRename, handleDelete } = props;
   const { id, fullUrl, linkId, views, createdAt } = linkInfo;
 
   const deleteBtnId = useId();
@@ -25,6 +26,10 @@ function LinkItem(props: ILinkItemProps): JSX.Element {
     } catch (_err) {
       notifyError('Failed to copy link to clipboard');
     }
+  };
+
+  const handleOpenRename = (): void => {
+    handleRename(id, linkId);
   };
 
   const handleDeleteLink = async (
@@ -66,7 +71,12 @@ function LinkItem(props: ILinkItemProps): JSX.Element {
               COPY
             </Typography>
           </Button>
-          <Button startIcon={<EditIcon />} size="small" variant="contained">
+          <Button
+            startIcon={<EditIcon />}
+            size="small"
+            variant="contained"
+            onClick={handleOpenRename}
+          >
             <Typography className="link-item-button-text" variant="button">
               RENAME
             </Typography>
