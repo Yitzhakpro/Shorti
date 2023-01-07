@@ -1,6 +1,7 @@
 import React, { useId } from 'react';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import { Button, Divider, Paper, Typography } from '@mui/material';
 import { fromNow, notifyError } from '../../../utils';
 import type { UrlInfo } from '../../../types';
@@ -63,6 +64,11 @@ function LinkItem(props: ILinkItemProps): JSX.Element {
           >
             <Typography className="link-item-button-text" variant="button">
               COPY
+            </Typography>
+          </Button>
+          <Button startIcon={<EditIcon />} size="small" variant="contained">
+            <Typography className="link-item-button-text" variant="button">
+              RENAME
             </Typography>
           </Button>
           <Button
