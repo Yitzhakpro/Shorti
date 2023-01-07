@@ -49,6 +49,32 @@ function useLinks() {
     [linksList]
   );
 
+  const renameLink = useCallback(
+    async (id: string, linkName: string): Promise<boolean> => {
+      const loadingId = notifyLoading('Updating shorti name...');
+      try {
+        await Links.renameShortUrl(id, linkName);
+
+        const newLinksList = linksList.map((linkInfo) => {
+          if (linkInfo.id === id) {
+            return { ...linkInfo, linkId: linkName };
+          }
+
+          return linkInfo;
+        });
+        setLinksList(newLinksList);
+        updateNotify(loadingId, `Renamed shorti to: ${linkName}`, 'success');
+
+        return true;
+      } catch (error: any) {
+        updateNotify(loadingId, error.message, 'error');
+
+        return false;
+      }
+    },
+    [linksList]
+  );
+
   const deleteLink = useCallback(
     async (id: string): Promise<void> => {
       const loadingId = notifyLoading('deleting a shorti...');
@@ -68,7 +94,7 @@ function useLinks() {
     [linksList]
   );
 
-  return { isLoading, linksList, isError, fetchLinks, createLink, deleteLink };
+  return { isLoading, linksList, isError, fetchLinks, createLink, renameLink, deleteLink };
 }
 
 export default useLinks;

@@ -7,11 +7,17 @@ import CreateLinkDialog from '../CreateLinkDialog';
 import DeleteLinkPopper from '../DeleteLinkPopper';
 import LinkItem from '../LinkItem';
 import LinksFetchingError from '../LinksFetchingError';
+import RenameLinkDialog from '../RenameLinkDialog';
+import type { UrlRenameInfo } from '../../../types';
 import './linksList.css';
 
 function LinksList(): JSX.Element {
-  const { isLoading, linksList, isError, fetchLinks, createLink, deleteLink } = useLinks();
-  const [addShortiOpen, setIsShortiOpen, toggleShorti] = useModal();
+  const { isLoading, linksList, isError, fetchLinks, createLink, renameLink, deleteLink } =
+    useLinks();
+  const [addShortiOpen, setIsAddShortiOpen, toggleAddShorti] = useModal();
+  const [renameShortiOpen, setIsRenameShortiOpen] = useModal();
+
+  const [currentUpdateInfo, setCurrentUpdateInfo] = useState<UrlRenameInfo>({ id: '', linkId: '' });
 
   const [deleteAnchorEl, setDeleteAnchorEl] = useState<null | HTMLElement>(null);
   const [deleteId, setDeleteId] = useState('');
@@ -46,9 +52,19 @@ function LinksList(): JSX.Element {
     setDeleteId('');
   };
 
+  const openRenameDialog = (id: string, linkId: string): void => {
+    setCurrentUpdateInfo({ id, linkId });
+    setIsRenameShortiOpen(true);
+  };
+
+  const closeRenameLinkDialog = useCallback(() => {
+    setCurrentUpdateInfo({ id: '', linkId: '' });
+    setIsRenameShortiOpen(false);
+  }, [setIsRenameShortiOpen]);
+
   const closeCreateLinkDialog = useCallback(() => {
-    setIsShortiOpen(false);
-  }, [setIsShortiOpen]);
+    setIsAddShortiOpen(false);
+  }, [setIsAddShortiOpen]);
 
   return (
     <>
@@ -58,7 +74,12 @@ function LinksList(): JSX.Element {
         {linksList &&
           linksList.map((urlInfo) => {
             return (
-              <LinkItem key={urlInfo.id} linkInfo={urlInfo} handleDelete={openDeleteConfirmation} />
+              <LinkItem
+                key={urlInfo.id}
+                linkInfo={urlInfo}
+                handleRename={openRenameDialog}
+                handleDelete={openDeleteConfirmation}
+              />
             );
           })}
       </Container>
@@ -70,6 +91,13 @@ function LinksList(): JSX.Element {
         handleDelete={handleDeleteLink}
       />
 
+      <RenameLinkDialog
+        isOpen={renameShortiOpen}
+        handleClose={closeRenameLinkDialog}
+        linkInfo={currentUpdateInfo}
+        renameLink={renameLink}
+      />
+
       <CreateLinkDialog
         isOpen={addShortiOpen}
         handleClose={closeCreateLinkDialog}
@@ -78,7 +106,7 @@ function LinksList(): JSX.Element {
       <Fab
         sx={{ position: 'absolute', bottom: 16, right: 16 }}
         color="primary"
-        onClick={toggleShorti}
+        onClick={toggleAddShorti}
       >
         <Add />
       </Fab>

@@ -72,11 +72,29 @@ class LinksService {
     }
   }
 
+  public async renameShortUrl(id: string, linkName: string): Promise<void> {
+    try {
+      await this.axiosClient.post<'Ok'>('/renameShortUrl', { id, linkName });
+    } catch (error: any) {
+      const RENAME_SHORT_URL_ERROR_CODES_TRANSLATION = {
+        BAD_TOKEN_ERROR: 'Auth error, try to login / re-login.',
+        URL_RENAME_ERROR: "Can't rename this url, try again later or contact support.",
+        URL_RENAME_ALREADY_EXIST_ERROR: `Can't rename to: ${linkName}, because this name is already used`,
+        URL_RENAME_NOT_EXIST_ERROR: "Can't rename this url because it doesn't exist.",
+        URL_RENAME_FORBIDDEN: "Can't rename this url because its not yours...",
+        URL_RENAME_VALIDATION_ERROR: "Can't rename this url becuase the new name is invalid",
+      };
+
+      return parseAxiosError(error, RENAME_SHORT_URL_ERROR_CODES_TRANSLATION);
+    }
+  }
+
   public async deleteShortUrl(shortUrlId: string): Promise<void> {
     try {
       await this.axiosClient.delete<'Ok'>(`/deleteShortUrl/${shortUrlId}`);
     } catch (error: any) {
       const DELETE_SHORT_URL_ERROR_CODES_TRANSLATION = {
+        BAD_TOKEN_ERROR: 'Auth error, try to login / re-login.',
         URL_DELETE_NOT_EXIST_ERROR: "Can't delete this url because it doesn't exist.",
         URL_DELETE_FORBIDDEN: "Can't delete this url because its not yours...",
         URL_DELETE_ERROR: "Can't delete this url, try again later.",

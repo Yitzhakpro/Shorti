@@ -5,3 +5,8 @@ export interface UrlInfo {
   views: number;
   createdAt: Date;
 }
+
+export interface UrlRenameInfo {
+  id: string;
+  linkId: string;
+}
