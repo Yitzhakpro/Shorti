@@ -1,0 +1,10 @@
+.logged-in-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.logout-btn {
+  color: white !important;
+  margin-left: 10px !important;
+}

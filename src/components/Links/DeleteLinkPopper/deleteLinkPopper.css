@@ -1,0 +1,11 @@
+.delete-confirmation-container {
+  padding: 10px 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.delete-confirmation-actions {
+    margin-top: 5%;
+  align-self: flex-end;
+}
