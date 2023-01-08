@@ -7,6 +7,7 @@ import CreateLinkDialog from '../CreateLinkDialog';
 import DeleteLinkPopper from '../DeleteLinkPopper';
 import LinkItem from '../LinkItem';
 import LinksFetchingError from '../LinksFetchingError';
+import LinkListActions from '../LinksListActions';
 import RenameLinkDialog from '../RenameLinkDialog';
 import type { UrlRenameInfo } from '../../../types';
 import './linksList.css';
@@ -23,6 +24,8 @@ function LinksList(): JSX.Element {
   const [deleteId, setDeleteId] = useState('');
 
   const isDeleteConfirmationOpen = Boolean(deleteAnchorEl);
+
+  const isSmallScreen = window.innerWidth < 800;
 
   const openDeleteConfirmation = (element: EventTarget & HTMLElement, id: string): void => {
     if (deleteAnchorEl && deleteAnchorEl.id === element.id) {
@@ -71,6 +74,7 @@ function LinksList(): JSX.Element {
       <Container className="links-list" maxWidth="md">
         {isLoading && <SkeletonList variant="rectangular" height={80} rows={15} />}
         {isError && <LinksFetchingError refetchLinks={fetchLinks} />}
+        {isSmallScreen && !isError && !isLoading && <LinkListActions toggleAdd={toggleAddShorti} />}
         {linksList &&
           linksList.map((urlInfo) => {
             return (
@@ -103,13 +107,19 @@ function LinksList(): JSX.Element {
         handleClose={closeCreateLinkDialog}
         createLink={createLink}
       />
-      <Fab
-        sx={{ position: 'absolute', bottom: 16, right: 16 }}
-        color="primary"
-        onClick={toggleAddShorti}
-      >
-        <Add />
-      </Fab>
+      {!isSmallScreen && (
+        <Fab
+          sx={{
+            position: 'absolute',
+            bottom: 16,
+            right: 16,
+          }}
+          color="primary"
+          onClick={toggleAddShorti}
+        >
+          <Add />
+        </Fab>
+      )}
     </>
   );
 }
