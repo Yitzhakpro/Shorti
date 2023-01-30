@@ -28,6 +28,12 @@ Each user can create their own urls and they can view / edit / delete them and e
 All short urls are open to the public, anybody can use any redirect that exist, just like a regular url shortner.
 
 # 📷 Screenshots
+## All links view:
+![all links view](https://user-images.githubusercontent.com/49496254/215593042-fd9824e6-ae15-4fa8-9eaa-3b99979f333f.png)
+
+## Add link view:
+![add link view](https://user-images.githubusercontent.com/49496254/215593467-58ee25be-4ceb-476d-bfba-477af87761b2.png)
+
 
 # 🔥 How does it work?
 
