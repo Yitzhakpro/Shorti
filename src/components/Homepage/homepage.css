@@ -1,11 +1,18 @@
 .homepage {
+  height: 89%;
+
   text-align: center;
 }
 
 .homepage-intorduction {
-  margin-top: 20%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 button.homepage-get-started-btn {
-  margin-top: 5%;
+  margin-top: 2%;
 }
