@@ -6,6 +6,8 @@ coverage/
 .env
 
 # misc
+*.md
+LICENSE
 yarn.lock
 package-lock.json
 package.json
