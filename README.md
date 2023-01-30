@@ -10,8 +10,6 @@
 
 </div>
 
-</br>
-
 <h4 align='center'>
     <a href="https://github.com/Yitzhakpro/Shorti-Frontend/blob/master/LICENSE">
         <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Shorti is released under the MIT license." />
